@@ -46,3 +46,20 @@ def test_prph(X_train, X_test, y_train, y_test):
         future = model.make_future_dataframe(periods=261)
         forecast = model.predict(future)
         return(forecast.yhat.tail(261))
+
+def graph_forcast(forecast,y_train,y_test):
+    test_val = pd.DataFrame()
+    test_val['Actual'] = y_test
+    test_val['Predicted'] = forecast.values
+    
+    plt.plot(y_train)
+    plt.plot(test_val[['Actual','Predicted']])
+    plt.legend(['History','Actual','Predict'])
+    plt.title('Prophet Model Predictions 1 Year')
+
+forecast = test_prph(X_train,X_test,y_train,y_test)
+a = forecast.values
+b = y_test.values
+rsme = np.sqrt(np.mean((a-b)**2))
+graph_forcast(forecast,y_train,y_test)
+
