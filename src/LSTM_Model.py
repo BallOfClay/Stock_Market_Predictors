@@ -64,3 +64,22 @@ def predict(model,scaler):
     closing_price = model.predict(X_test)
     closing_price = scaler.inverse_transform(closing_price)
     return closing_price
+
+def graph(model,df,scaler):
+    predicts = predict(model,scaler)
+    train = pd.DataFrame()
+    train['Close'] = df['Close'][:1044]
+    valid = pd.DataFrame()
+    valid['Close'] = df['Close'][1044:1305:]
+    valid['Predict'] = predicts
+
+    plt.plot(train['Close'])
+    plt.plot(valid[['Close','Predict']])
+    plt.legend(['History','Actual','Predict'])
+    plt.title('LSTM Predictions 1 Year')
+model,scaler = make_LSTM(df)
+predicts = predict(model,scaler)
+graph(model,df,scaler)
+a = df['Close'][1044:1305:].values
+b = predicts
+rsme = np.sqrt(np.mean((a-b)**2))
