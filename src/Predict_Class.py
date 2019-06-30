@@ -36,23 +36,3 @@ class Stocks():
         plt.ylabel('Price (US Dollars)');
         plt.grid(color = 'k', alpha = 0.4);
         plt.xticks(rotation=90);
-    '''
-    def prophet_graph(self,days=365):
-        df = pd.DataFrame()
-        df['y'] = self.stock['Close']
-        df['ds']= self.stock.index
-        with suppress_stdout_stderr():
-            model = Prophet(
-                            daily_seasonality=False,
-                            weekly_seasonality=False,
-                            yearly_seasonality=True,
-                            changepoint_prior_scale=.95
-                            )
-            model.add_seasonality(name='monthly', period=30.5, fourier_order=5)
-            model.fit(df)
-            future = model.make_future_dataframe(periods=days)
-            forecast = model.predict(future)
-            fig1 = model.plot(forecast)
-            fig = model.plot_components(forecast)
-        print(fig1,fig)
-    '''
