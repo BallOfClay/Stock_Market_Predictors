@@ -15,6 +15,7 @@ from keras.models import Sequential
 from keras.layers import Dense, LSTM
 from keras import backend as K
 
+plt.style.use('fivethirtyeight')
 quandl.ApiConfig.api_key = os.environ.get('quandl')
 
 df = quandl.get('WIKI/MSFT',rows=1305)
@@ -80,6 +81,7 @@ def graph(model,df,scaler):
 model,scaler = make_LSTM(df)
 predicts = predict(model,scaler)
 graph(model,df,scaler)
+
 a = df['Close'][1044:1305:].values
 b = predicts
 rsme = np.sqrt(np.mean((a-b)**2))

@@ -62,4 +62,3 @@ a = forecast.values
 b = y_test.values
 rsme = np.sqrt(np.mean((a-b)**2))
 graph_forcast(forecast,y_train,y_test)
-
