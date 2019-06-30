@@ -25,3 +25,24 @@ X_test = X[1044:1305:]
 y_test = y[1044:1305:]
 X_train = X[:1044]
 y_train = y[:1044]
+
+def test_prph(X_train, X_test, y_train, y_test):
+    train = pd.DataFrame()
+    train['ds'] = list(X_train)
+    train['y'] = list(y_train)
+    test = pd.DataFrame()
+    test['ds'] = list(X_test)
+    test['y'] = list(y_test)
+    
+    with suppress_stdout_stderr():
+        model = Prophet(
+                            daily_seasonality=False,
+                            weekly_seasonality=False,
+                            yearly_seasonality=True,
+                            changepoint_prior_scale=.05
+                            )
+        model.add_seasonality(name='monthly', period=30.5, fourier_order=5)
+        model.fit(train)
+        future = model.make_future_dataframe(periods=261)
+        forecast = model.predict(future)
+        return(forecast.yhat.tail(261))
