@@ -19,6 +19,9 @@ quandl.ApiConfig.api_key = os.environ.get('quandl')
 
 df = quandl.get('WIKI/MSFT',rows=1305)
 
+def root_mean_squared_error(y_true, y_pred):
+        return K.sqrt(K.mean(K.square(y_pred - y_true))) 
+    
 def _scale_and_shape(df):
     data = np.array(df['Close'].values).reshape(-1,1)
 
@@ -34,3 +37,15 @@ def _scale_and_shape(df):
     X_train = np.reshape(X_train, (X_train.shape[0],X_train.shape[1],1))
     return(X_train,y_train,scaler)
     
+def make_LSTM(df):
+    X_train,y_train,scaler = _scale_and_shape(df)
+
+    model = Sequential()
+    model.add(LSTM(units=50, return_sequences=True, input_shape=(X_train.shape[1],1)))
+    model.add(LSTM(units=50))
+    model.add(Dense(1))
+    
+    model.compile(loss=root_mean_squared_error, optimizer='adam')
+    model.fit(X_train, y_train, epochs=1, batch_size=32)
+
+    return(model,scaler)
