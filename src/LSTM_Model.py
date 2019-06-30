@@ -49,3 +49,18 @@ def make_LSTM(df):
     model.fit(X_train, y_train, epochs=1, batch_size=32)
 
     return(model,scaler)
+    
+def predict(model,scaler):
+    inputs = df['Close'][783:].values
+    inputs = inputs.reshape(-1,1)
+    inputs  = scaler.transform(inputs)
+
+    X_test = []
+    for i in range(261,inputs.shape[0]):
+        X_test.append(inputs[i-261:i,0])
+    X_test = np.array(X_test)
+    X_test = np.reshape(X_test, (X_test.shape[0],X_test.shape[1],1))
+    
+    closing_price = model.predict(X_test)
+    closing_price = scaler.inverse_transform(closing_price)
+    return closing_price
