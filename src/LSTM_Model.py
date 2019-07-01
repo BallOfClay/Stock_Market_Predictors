@@ -36,6 +36,7 @@ def _scale_and_shape(df):
         y_train.append(scaled_data[i,0])
     X_train, y_train = np.array(X_train), np.array(y_train)
     X_train = np.reshape(X_train, (X_train.shape[0],X_train.shape[1],1))
+    print(X_train.shape)
     return(X_train,y_train,scaler)
     
 def make_LSTM(df):
