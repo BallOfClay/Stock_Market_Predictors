@@ -1,10 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 25 13:18:34 2019
-
-@author: seth
-"""
+from flask import Flask, render_template, request
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -15,10 +9,15 @@ import os
 from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
+from matplotlib import rcParams
 
+rcParams.update({'figure.autolayout': True})
 plt.style.use('fivethirtyeight')
 quandl.ApiConfig.api_key = os.environ.get('quandl')
-    
+
+app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
 class Prophet_Model():
 
     def __init__(self,exchange,symbol,days_to_predict=30):
@@ -79,6 +78,8 @@ class Prophet_Model():
         predicted = self.forecast[-self.days_predict:]
         predicted.set_index('ds',inplace=True)
         fig, ax = plt.subplots()
+        plt.autoscale()
+        plt.tight_layout(pad=3)
         ax.plot(graph)
         ax.plot(predicted['yhat'])
         ax.legend(['History','Predicted'])
@@ -86,8 +87,7 @@ class Prophet_Model():
         plt.xlabel('Date')
         plt.ylabel('Value (US$0)')
         plt.title(self.symbol + ' Prophet prediction')
-        self.model.reset_states()
-
+        plt.savefig('static/images/prophet.png')
         
 class LSTM_Model():
     
@@ -167,6 +167,8 @@ class LSTM_Model():
         hist = self.predictions[:self.days_predict*2]
         pred = self.predictions[-self.days_predict:]
         fig,ax = plt.subplots()
+        plt.autoscale()
+        plt.tight_layout(pad=3)
         ax.plot(hist)
         ax.plot(pred)
         ax.legend(['History','Predictions'])
@@ -174,5 +176,55 @@ class LSTM_Model():
         plt.xlabel('Date')
         plt.ylabel('Value (US$0)')
         plt.title(self.symbol + ' LSTM prediction')
-        self.model.reset_states()
+        plt.savefig('static/images/lstm.png')
         
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/prophet')
+def prophet():
+    return render_template('prophet.html')
+
+@app.route('/lstm')
+def lstm():
+    return render_template('lstm.html')
+
+@app.route('/prophet', methods=['POST'])
+def prophet_form_post():
+    exchange = request.form['exchange']
+    stock = request.form['stock']
+    days = request.form['days']
+    exchange = exchange.upper()
+    stock = stock.upper()
+    days = days.upper()
+    prop = Prophet_Model(exchange,stock,int(days))
+    prop.show()
+    return render_template('prophet_graph.html')
+
+@app.route('/lstm', methods=['POST'])
+def lstm_form_post():
+    exchange = request.form['exchange']
+    stock = request.form['stock']
+    days = request.form['days']
+    exchange = exchange.upper()
+    stock = stock.upper()
+    days = days.upper()
+    lstm = LSTM_Model(exchange,stock,int(days))
+    lstm.show()
+    return render_template('lstm_graph.html')
+
+@app.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
+
+if __name__ == '__main__':
+    app.run()

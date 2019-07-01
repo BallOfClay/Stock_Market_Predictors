@@ -56,6 +56,7 @@ def graph_forcast(forecast,y_train,y_test):
     plt.plot(test_val[['Actual','Predicted']])
     plt.legend(['History','Actual','Predict'])
     plt.title('Prophet Model Predictions 1 Year')
+    plt.savefig('../img/prophet.png')
 
 forecast = test_prph(X_train,X_test,y_train,y_test)
 a = y_test.values
