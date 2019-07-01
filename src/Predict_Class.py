@@ -25,29 +25,77 @@ def root_mean_squared_error(y_true, y_pred):
     
 class Prophet_Model():
     
-    def __init__(self,exchange,symbol,days_to_grab=-1):
+    def __init__(self,exchange,symbol,days_to_grab=1305,days_to_predict=261):
         self.exchange = exchange.upper()
         self.symbol = symbol.upper()
         self.rows = days_to_grab
         self.get = exchange + '/' + symbol
+        self.days_predict = days_to_predict
         self._get_stock()
-        
+    
+    def plot_hist(self):
+        plt.plot(self.stock['Close'])
+        plt.title(self.symbol+' Stock History')
+        plt.xlabel('Date')
+        plt.ylabel('Value (US$)')       
+
     def _get_stock (self):
         if self.rows == -1:
             self.stock = quandl.get(self.get)
         else:
             self.stock = quandl.get(self.get,rows=self.rows)
-
-
+        self._fit()
+        
+    def _fit (self):
+        X = self.stock.index
+        y = self.stock.Close
+        train = pd.DataFrame()
+        train['y'] = y.values
+        train['ds'] = X.values
+        with suppress_stdout_stderr():
+            model = Prophet(
+                            daily_seasonality=False,
+                            weekly_seasonality=False,
+                            yearly_seasonality=True,
+                            changepoint_prior_scale=.05
+                            )
+            model.add_seasonality(name='monthly', period=30.5, fourier_order=5)
+            model.fit(train)
+            future = model.make_future_dataframe(periods=self.days_predict)
+            self.forecast = model.predict(future)
+            
+    def show(self):
+        graph = pd.DataFrame(index=self.stock.index[-self.days_predict:])
+        graph['History'] = self.stock[-self.days_predict:].Close
+        predicted = self.forecast[-self.days_predict:]
+        predicted.set_index('ds',inplace=True)
+        plt.plot(graph)
+        plt.plot(predicted['yhat'])
+        plt.legend(['History','Predicted'])
+        plt.xticks(rotation=90)
+        plt.xlabel('Date')
+        plt.ylabel('Value (US$0)')
+        plt.title(self.symbol + ' prediction')
+        '''
+        x = self.stock[-self.days_predict:].Close
+        y = self.forecast[-self.days_predict:].yhat
+        '''
+        
 class LSTM_Model():
     
-    def __init__(self,exchange,symbol,days_to_grab=-1):
+    def __init__(self,exchange,symbol,days_to_grab=1305):
         self.exchange = exchange.upper()
         self.symbol = symbol.upper()
         self.rows = days_to_grab
         self.get = exchange + '/' + symbol
         self._get_stock()
         self._scale_and_fit()
+    
+    def plot_hist(self):
+        plt.plot(self.stock['Close'])
+        plt.title(self.symbol+' Stock History')
+        plt.xlabel('Date')
+        plt.ylabel('Value (US$)')
         
     def _get_stock (self):
         if self.rows == -1:
@@ -75,3 +123,4 @@ class LSTM_Model():
     
         model.compile(loss=root_mean_squared_error, optimizer='adam')
         model.fit(X_train, y_train, epochs=1, batch_size=32)
+        
