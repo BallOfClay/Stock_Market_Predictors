@@ -82,6 +82,10 @@ model,scaler = make_LSTM(df)
 predicts = predict(model,scaler)
 graph(model,df,scaler)
 
-a = df['Close'][1044:1305:].values
-b = predicts
-rsme = np.sqrt(np.mean((a-b)**2))
+a = np.array(df['Close'][1044:1305:].values)
+b = np.array(predicts).reshape(-1)
+rmse = np.sqrt(np.mean((b-a)**2))
+
+dat = pd.DataFrame()
+dat['Actuals'] = a
+dat['Predicted'] = b

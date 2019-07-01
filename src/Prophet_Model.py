@@ -58,7 +58,11 @@ def graph_forcast(forecast,y_train,y_test):
     plt.title('Prophet Model Predictions 1 Year')
 
 forecast = test_prph(X_train,X_test,y_train,y_test)
-a = forecast.values
-b = y_test.values
-rsme = np.sqrt(np.mean((a-b)**2))
+a = y_test.values
+b = forecast.values
+rmse = np.sqrt(np.mean((b-a)**2))
+
 graph_forcast(forecast,y_train,y_test)
+dat = pd.DataFrame()
+dat['Actuals'] = a
+dat['Predicted'] = b
