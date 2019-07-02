@@ -10,11 +10,11 @@
 <h1>This is my LSTM Model coded using keras and pyhton</h1>
 <p>This model predicts future stock prices based on input from the user such as chooosing the stock, exchange, and days to predict.</p><br>
 <form method="POST">
-<p>Exchange is the specific exchange that the stock is found in such as NASDAQ. If an echange is not working try using "wiki" as the exchange since this is the Quandl API default.</p>
+<p>Exchange is the specific exchange that the stock is found, in such as NASDAQ. If an echange is not working try using "wiki" as the exchange since this is the Quandl API default.</p>
   Exchange (usually wiki): <input type="text" name="exchange"><br>
 <p>Stock Symbol is the stocks letter code, such as AAPL is Apple and MSFT is Microsoft.</p>
   Stock symbol: <input  type="text" name="stock"><br>
-<p>Days to predict is the ammount of days into the future you want the model to predict. Please note that the further into the future the model looks the less likley the model is going to predict accurately</p>
+<p>Days to predict is the ammount of days into the future you want the model to predict. Please note that the further into the future the model looks the less likely the model is going to predict accurately</p>
   Days to Predict <input type="text" name="days"><br>
     <input type="submit">
 </form>
