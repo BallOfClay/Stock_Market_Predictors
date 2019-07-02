@@ -1,11 +1,26 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <html>
 <head>
 <title>Stock Predictions</title>
 </head>
-<body>
-<h1> Stock Predictor Models </h1>
-<p> Click a stock prediction model to get started </p>
+<center>
+<body background=https://c.pxhere.com/photos/53/83/newspaper_stocks_stock_price_pen_newspapers_stock_market-669878.jpg!d>
+<h1>Stock Market predictors</h1>
+<p>This web app currently contains two models for predicting future stock prices, you can read about the models below before selecting one for use. These models' results should not be used for financial decisions as they are only predictions and are not always accurate.</p>
+
+<div class="row">
+  <div class="column" style="background-color:#ccc;">
+    <h2>Prophet Model</h2>
+    <p>The prophet model is mode from the Facebook produced FBProphet python package. Here is the description of the model from their website <a href="https://facebook.github.io/prophet/">here</a>; "Prophet is a procedure for forecasting time series data based on an additive model where non-linear trends are fit with yearly, weekly, and daily seasonality, plus holiday effects. It works best with time series that have strong seasonal effects and several seasons of historical data. Prophet is robust to missing data and shifts in the trend, and typically handles outliers well." I am using this model to create a benchmark to compare a specialized LSTM model (read below) to determine if a neural net model can outperform seasonal trend predictions.</p>
+  </div>
+  <div class="column" style="background-color:#ccc;">
+    <h2>LSTM Model</h2>
+    <p>This model is a neural net powered by the python Keras package that I have configured to predict future stock prices. If you are curious about how the LSTM works you can read more about it <a href="https://en.wikipedia.org/wiki/Long_short-term_memory">here</a>. The model consists of 3 layers, 2 LSTM layers with <a href="https://theclevermachine.wordpress.com/tag/tanh-function/">TAHN</a> activation followed by a dense layer with linear activation.</p>
+  </div>
+</div>
+<h2><mark style="background-color:#ccc;"> Model Selection</mark></h2>
+<p><mark style="background-color:#ccc;">Click a stock prediction model to get started</mark></p>
 <form action= "/prophet" >
         <input type= "submit" value= "Go to prophet model"/>
 </form>
@@ -13,4 +28,7 @@
         <input type= "submit" value= "Go to lstm model"/>
 </form>
 </body>
+<footer style="background-color:#ccc;"> Created by: Seth Hillis | <a href="https://github.com/shillis17/Stock_Market_Predictors">About</a> | <a href="https://www.linkedin.com/in/sethhillis/">Contact Me</a>
+</footer>
+</center>
 </html>

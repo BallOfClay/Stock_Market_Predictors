@@ -1,20 +1,30 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <html>
 <head>
 <title>Prophet Model</title>
 </head>
-<body>
+<center>
+<body background=https://c.pxhere.com/photos/53/83/newspaper_stocks_stock_price_pen_newspapers_stock_market-669878.jpg!d>
 
 <h1>This is Facebook's prophet model coded using pyhton</h1>
-<p>This model predicts future stock prices based on input from the user such as chooosing the stock, exchange, and days to predict.</p>
-<form method="POST">
+<p>This model predicts future stock prices based on input from the user such as chooosing the stock, exchange, and days to predict.</p><br>
+<form style="background-color:#ccc;" method="POST">
+<p style="background-color:#ccc;">Exchange is the specific exchange that the stock is found in such as NASDAQ. If an echange is not working try using "wiki" as the exchange since this is the Quandl API default.</p>
   Exchange (usually wiki): <input type="text" name="exchange"><br>
+<p style="background-color:#ccc;">Stock Symbol is the stocks letter code, such as AAPL is Apple and MSFT is Microsoft.</p>
   Stock symbol: <input type="text" name="stock"><br>
+<p style="background-color:#ccc;">Days to predict is the ammount of days into the future you want the model to predict. Please note that the further into the future the model looks the less likley the model is going to predict accurately</p>
   Days to Predict <input type="text" name="days"><br>
     <input type="submit">
 </form>
+</center>
 <form action= "/" >
         <input type= "submit" value= "Go home"/>
 </form>
 </body>
+<center>
+<footer style="background-color:#ccc;"> Created by: Seth Hillis | <a href="https://github.com/shillis17/Stock_Market_Predictors">About</a> | <a href="https://www.linkedin.com/in/sethhillis/">Contact Me</a>
+</footer>
+</center>
 </html>
