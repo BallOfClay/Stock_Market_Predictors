@@ -27,7 +27,7 @@ I began writing my code for the model by comparing the previous attempts at stoc
 ***
 ### Data
 
-My data comes from the Quandl API,I have a key that gives access to 50,000 requests per day. I began by looking at the format of my data and the details of my data. I got lucky and the API sends the data inside a Pandas dataframe.
+My data comes from the Quandl API,I have a key that gives access to 50,000 requests per day. I began by looking at the format of my data and the details of my data. I got lucky and the API sends the data inside a Pandas dataframe. I used the previous 5 years of data for training my mase models to make predictions on, so that is what I have based my EDA on.
 ![alt text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/dfinfo.png)
 
 After seeing that the data was complete and already very clean I moved onto looking at the data itself.
