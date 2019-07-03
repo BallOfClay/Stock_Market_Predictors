@@ -8,6 +8,7 @@
 <!--ts-->
  * [Description](#description)
  * [Process](#process)
+ * [Data](#data)
  * [Visualization](#visualization)
  * [Analysis](#analysis)
  * [Conclusion](#conclusion)
@@ -23,6 +24,23 @@ I have created a web app that hosts two models for predicting future stock price
 To begin my process I researched the models that are commonly used to predict stocks so I could limit which models I was considering. During this time I found the FBprophet model and was interested in how the model works and how well it performs. After running some tests and seeing the results, I decided to use the model as a benchmark to compare my model's results to. After some more research, I saw that the most commonly used model was the LSTM model.
 
 I began writing my code for the model by comparing the previous attempts at stock market prediction and using my code to take what worked well from those and attempt to fix what did not work as well. For my data I used the Quandl python API to pull my stock data into each program instead of using a data file with my scripts.
+***
+### Data
+
+My data comes from the Quandl API,I have a key that gives access to 50,000 requests per day. I began by looking at the format of my data and the details of my data. I got lucky and the API sends the data inside a Pandas dataframe. I used the previous 5 years of data for training my mase models to make predictions on, so that is what I have based my EDA on.
+![alt text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/dfinfo.png)
+
+After seeing that the data was complete and already very clean I moved onto looking at the data itself.
+#### AAPL
+![alt text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/aapldata.png)
+I looked at multiple stocks to be sure the data is the same for each one.
+#### MSFT
+![alt text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/msftdata.png)
+#### JNJ
+![alt text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/jnjdata.png)
+
+After looking at this I plotted the stock history so that I have a visual comparison to compare my predidctions against.
+![alt_text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/histeda.png)
 ***
 ### Visualization
 Here are some of the stocks that I have tested so that you can see the results of each model.
