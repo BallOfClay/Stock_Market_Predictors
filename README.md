@@ -32,12 +32,12 @@ My data comes from the Quandl API,I have a key that gives access to 50,000 reque
 
 After seeing that the data was complete and already very clean I moved onto looking at the data itself.
 #### AAPL
-![alt text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/aapldata.png)
+![alt text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/aaplhead.png)
 I looked at multiple stocks to be sure the data is the same for each one.
 #### MSFT
-![alt text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/msftdata.png)
+![alt text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/msfthead.png)
 #### JNJ
-![alt text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/jnjdata.png)
+![alt text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/jnjhead.png)
 
 After looking at this I plotted the stock history so that I have a visual comparison to compare my predidctions against.
 ![alt_text](https://github.com/shillis17/Stock_Market_Predictors/blob/master/img/histeda.png)
