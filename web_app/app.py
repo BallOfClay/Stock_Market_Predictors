@@ -48,7 +48,7 @@ class Prophet_Model():
             try:
                 self.stock = quandl.get(self.get,rows=self.rows)
             except Exception as error:
-                print('Data was not found, please check exchange and ticker.')
+                print('Data was not found, please check exchange and tic?ker.')
                 print(error)
                 return
             
